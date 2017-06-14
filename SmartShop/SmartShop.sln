@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShop", "SmartShop\SmartShop.csproj", "{30FF2BB1-10ED-40FE-9BD3-53812A265973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShopBUS", "SmartShopBUS\SmartShopBUS.csproj", "{4B48A89F-6159-4531-A9AC-8F891D8A7C90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShopBUS", "..\..\..\..\..\MyDownloads\SmartShopBUS\SmartShopBUS\SmartShopBUS.csproj", "{4B48A89F-6159-4531-A9AC-8F891D8A7C90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

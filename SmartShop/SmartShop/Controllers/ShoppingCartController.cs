@@ -27,7 +27,7 @@ namespace SmartShop.Controllers
         [HttpPost]
         public JsonResult AddToCart(string id)
         {
-            var response = new { Code = 1, Msg = "Fail" };
+            var response = new { Code = 1, Msg = "Fail", sluong = @Session["sluong"], ttien = @Session["TongTien"] };
             var db = new SmartShopConnectionDB();
             Product sp = db.Single<Product>("select * from Product where MaSP = @0", id);
             if (sp != null)
@@ -50,48 +50,73 @@ namespace SmartShop.Controllers
 
                 objCart.AddToCart(item);
                 Session["Cart"] = objCart;
-                response = new { Code = 0, Msg = "Success" };
+                ShoppingCartModels model = new ShoppingCartModels();
+                model.Cart = (ShoppingCart)Session["Cart"];
+                int ii = 0;
+                int tongtien = 0;
+                foreach (var item2 in model.Cart.ListItem)
+                {
+                    tongtien = tongtien + (int)item2.TongCong;
+                    ii++;
+                }
+                Session["sluong"] = ii;
+                Session["TongTien"] = tongtien.ToString("N0");
+                response = new { Code = 0, Msg = "Success", sluong = @Session["sluong"], ttien = @Session["TongTien"] };
             }
-            ShoppingCartModels model = new ShoppingCartModels();
-            model.Cart = (ShoppingCart)Session["Cart"];
-            int ii = 0;
-            int tongtien = 0;
-            foreach(var item2 in model.Cart.ListItem)
-            {
-                tongtien = tongtien + (int)item2.TongCong;
-                ii++;
-            }
-            Session["sluong"]=ii;
-            Session["TongTien"] = tongtien;
+
             return Json(response);
         }
 
         [HttpPost]
         public JsonResult RemoveFromCart(string id)
         {
-            var response = new { Code = 1, Msg = "Fail" };
+            var response = new { Code = 1, Msg = "Fail", masp = id, sluong = @Session["sluong"], ttien = @Session["TongTien"] };
 
             ShoppingCart objCart = (ShoppingCart)Session["Cart"];
             if (objCart != null)
             {
                 objCart.RemoveFromCart(id);
                 Session["Cart"] = objCart;
-                response = new { Code = 0, Msg = "Success" };
+                ShoppingCartModels model = new ShoppingCartModels();
+                model.Cart = (ShoppingCart)Session["Cart"];
+                int ii = 0;
+                int tongtien = 0;
+                foreach (var item2 in model.Cart.ListItem)
+                {
+                    tongtien = tongtien + (int)item2.TongCong;
+                    ii++;
+                }
+                Session["sluong"] = ii;
+                Session["TongTien"] = tongtien.ToString("N0");
+                response = new { Code = 0, Msg = "Success", masp = id, sluong = @Session["sluong"], ttien = @Session["TongTien"] };
             }
             return Json(response);
         }
 
         [HttpPost]
-        public JsonResult UpdateQuantity(string id, int quantity)
+        public JsonResult UpdateQuantity(string id, int quantity, int gia)
         {
-            var response = new { Code = 1, Msg = "Fail" };
+            int tonggia = quantity * gia;
+            var response = new { Code = 1, Msg = "Fail", masp = id, sluong = @Session["sluong"], ttien = @Session["TongTien"], tgia = tonggia.ToString("N0") };
 
             ShoppingCart objCart = (ShoppingCart)Session["Cart"];
             if (objCart != null)
             {
                 objCart.UpdateQuantity(id, quantity);
                 Session["Cart"] = objCart;
-                response = new { Code = 0, Msg = "Success" };
+                ShoppingCartModels model = new ShoppingCartModels();
+                model.Cart = (ShoppingCart)Session["Cart"];
+                int ii = 0;
+                int tongtien = 0;
+                foreach (var item2 in model.Cart.ListItem)
+                {
+                    tongtien = tongtien + (int)item2.TongCong;
+                    ii++;
+                }
+                Session["sluong"] = ii;
+                Session["TongTien"] = tongtien.ToString("N0");
+                tonggia = quantity * gia;
+                response = new { Code = 0, Msg = "Success", masp = id, sluong = @Session["sluong"], ttien = @Session["TongTien"], tgia = tonggia.ToString("N0") };
             }
             return Json(response);
         }
@@ -114,9 +139,9 @@ namespace SmartShop.Controllers
                 dh.GhiChu = GhiChu;
                 dh.NgayDatHang = DateTime.Now;
                 dh.Tongtien = (int)Session["TongTien"];
-                
+
                 //CTDH
-                
+
                 List<ChiTietDH> dsCTDH = new List<ChiTietDH>();
                 ShoppingCartModels model = new ShoppingCartModels();
                 model.Cart = (ShoppingCart)Session["Cart"];
@@ -130,14 +155,14 @@ namespace SmartShop.Controllers
                     dsCTDH.Add(ctdh);
                 }
                 //
-                DonHangBus.Them(dh,dsCTDH);
-                return RedirectToAction("Index","Home");
+                DonHangBus.Them(dh, dsCTDH);
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
                 return RedirectToAction("Index", "ShoppingCart");
             }
-            
+
         }
         public decimal? TongCong { get; set; }
     }

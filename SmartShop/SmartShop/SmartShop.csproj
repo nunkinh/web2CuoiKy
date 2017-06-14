@@ -996,7 +996,7 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SmartShopBUS\SmartShopBUS.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\MyDownloads\SmartShopBUS\SmartShopBUS\SmartShopBUS.csproj">
       <Project>{4b48a89f-6159-4531-a9ac-8f891d8a7c90}</Project>
       <Name>SmartShopBUS</Name>
     </ProjectReference>

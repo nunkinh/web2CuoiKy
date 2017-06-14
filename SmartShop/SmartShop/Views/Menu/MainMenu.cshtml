@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SmartShopConnection.viewMenu>
+@{
+    Layout = null;
+}
+<div class="mainmenu-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="logo">
+                    <h1><a href="~/"><img src="~/Image/logo.png"></a></h1>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="~/">Trang chủ</a></li>
+                        @foreach (var item in Model)
+                        {
+                            <li>
+                                <a href="@Url.Action("CLoai", "Product", new { macl=item.MaCL})">@item.TenCL</a>
+                                <ul class="submenu">
+                                    @foreach (var item2 in item.dsLoai)
+                                    {
+                                        <li><a href="@Url.Action("Loai", "Product", new { maloai=item2.MaLoai})">@item2.TenLoai</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-2 mini_cart">
+                <div class="shopping-item">
+                    <a href="/ShoppingCart/Index">Cart - <span class="cart-amunt">@Session["TongTien"]</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">@Session["sluong"]</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End mainmenu area -->
