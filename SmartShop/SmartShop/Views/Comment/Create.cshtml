@@ -1,14 +1,43 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@model SmartShop.Models.LoginViewModel
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
     <form action="@Url.Action("Created", "Comment")" method="post">
         <input type="hidden" id="MaSP" name="MaSP" value="@Session["MaSP"]" />
         <input type="hidden" id="UserCmt" name="UserCmt" value="@User.Identity.GetUserName()" />
-        <textarea name="NoiDung" id="NoiDung" rows="5" style="width:100%;"></textarea>
-        <input type="submit" value="Đăng">
+        <p><label for="name">@User.Identity.GetUserName()</label></p>
+        <p>
+            <label for="review">Bình luận của bạn:</label>
+            <textarea name="NoiDung" id="NoiDung" rows="10" cols="30" ></textarea>
+        </p>
+        
+        <p><input type="submit" value="Gửi"></p>
     </form>
 }
 else
 {
-    <h2>Vui lòng đăng nhập để Comment</h2>
+    <div class="heading"><h2>Vui lòng đăng nhập</h2></div>
+    <form name="form1" id="ff1" method="post" action="/Account/Login" role="form">
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Tên đăng nhập" })
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+
+            <div class="form-group">                
+                <button type="submit" name="login" id="login">Đăng nhập</button>
+            </div>
+        }
+    </form>
 }

@@ -68,7 +68,7 @@
 
             <div class="col-md-12">
                 <div class="latest-product">
-                    <h2 class="section-title">Latest Products</h2>
+                    <h2 class="section-title">Top Views</h2>
                     <div class="row">
                         @foreach (var item in Model.Items)
                         {
@@ -76,7 +76,7 @@
                                 <div class="product-f-image">
                                     <img src="~/Image/product/@Html.DisplayFor(modelItem => item.Hinh)" alt="">
                                     <div class="product-hover">
-                                        <a class="add-to-cart-link" onclick="AddToCart('@Html.DisplayFor(modelItem => item.MaSP)',@Html.DisplayFor(modelItem => item.Gia))">
+                                        <a class="add-to-cart-link" onclick="AddToCart('@Html.DisplayFor(modelItem => item.MaSP)')">
                                             <i class="fa fa-shopping-cart"></i>
                                             Add to cart
                                         </a>

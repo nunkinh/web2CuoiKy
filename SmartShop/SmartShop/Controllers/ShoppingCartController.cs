@@ -63,14 +63,14 @@ namespace SmartShop.Controllers
                 Session["TongTien"] = tongtien.ToString("N0");
                 response = new { Code = 0, Msg = "Success", sluong = @Session["sluong"], ttien = @Session["TongTien"] };
             }
-
+            
             return Json(response);
         }
 
         [HttpPost]
         public JsonResult RemoveFromCart(string id)
         {
-            var response = new { Code = 1, Msg = "Fail", masp = id, sluong = @Session["sluong"], ttien = @Session["TongTien"] };
+            var response = new { Code = 1, Msg = "Fail", masp = id, ttien = @Session["TongTien"] };
 
             ShoppingCart objCart = (ShoppingCart)Session["Cart"];
             if (objCart != null)
@@ -88,7 +88,7 @@ namespace SmartShop.Controllers
                 }
                 Session["sluong"] = ii;
                 Session["TongTien"] = tongtien.ToString("N0");
-                response = new { Code = 0, Msg = "Success", masp = id, sluong = @Session["sluong"], ttien = @Session["TongTien"] };
+                response = new { Code = 0, Msg = "Success", masp = id, ttien = @Session["TongTien"] };
             }
             return Json(response);
         }
@@ -97,7 +97,7 @@ namespace SmartShop.Controllers
         public JsonResult UpdateQuantity(string id, int quantity, int gia)
         {
             int tonggia = quantity * gia;
-            var response = new { Code = 1, Msg = "Fail", masp = id, sluong = @Session["sluong"], ttien = @Session["TongTien"], tgia = tonggia.ToString("N0") };
+            var response = new { Code = 1, Msg = "Fail", masp = id, ttien = @Session["TongTien"], tgia = tonggia.ToString("N0") };
 
             ShoppingCart objCart = (ShoppingCart)Session["Cart"];
             if (objCart != null)
@@ -116,7 +116,7 @@ namespace SmartShop.Controllers
                 Session["sluong"] = ii;
                 Session["TongTien"] = tongtien.ToString("N0");
                 tonggia = quantity * gia;
-                response = new { Code = 0, Msg = "Success", masp = id, sluong = @Session["sluong"], ttien = @Session["TongTien"], tgia = tonggia.ToString("N0") };
+                response = new { Code = 0, Msg = "Success", masp = id, ttien = @Session["TongTien"], tgia = tonggia.ToString("N0") };
             }
             return Json(response);
         }
@@ -139,9 +139,9 @@ namespace SmartShop.Controllers
                 dh.GhiChu = GhiChu;
                 dh.NgayDatHang = DateTime.Now;
                 dh.Tongtien = (int)Session["TongTien"];
-
+                
                 //CTDH
-
+                
                 List<ChiTietDH> dsCTDH = new List<ChiTietDH>();
                 ShoppingCartModels model = new ShoppingCartModels();
                 model.Cart = (ShoppingCart)Session["Cart"];
@@ -155,14 +155,14 @@ namespace SmartShop.Controllers
                     dsCTDH.Add(ctdh);
                 }
                 //
-                DonHangBus.Them(dh, dsCTDH);
-                return RedirectToAction("Index", "Home");
+                DonHangBus.Them(dh,dsCTDH);
+                return RedirectToAction("Index","Home");
             }
             catch
             {
                 return RedirectToAction("Index", "ShoppingCart");
             }
-
+            
         }
         public decimal? TongCong { get; set; }
     }

@@ -46,6 +46,7 @@
     <link href="~/Content/css/owl.carousel.css" rel="stylesheet" type="text/css" media="all" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="~/Scripts/js/jquery.min.js"></script>
+    <script src="~/Scripts/js_new/jquery-2.1.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $(".dropdown img.flag").addClass("flagvisibility");
@@ -128,30 +129,30 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="/ShoppingCart/Index"><i class="fa fa-shopping-cart"></i> My Cart</a></li>
+                            <li><a href="/ShoppingCart/Index"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                             @if (!Request.IsAuthenticated)
                             {
-                                <li><a href="/Account/Register"><i class="fa fa-user"></i>Đăng ký</a></li>
+                                <li><a href="/Account/Login"><i class="fa fa-user"></i>Đăng ký</a></li>
                             }
                             @if (Request.IsAuthenticated)
                             {
-                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                                {
+                                <li>
+                                    <a href="~/Account/Details?id=@User.Identity.GetUserName()">
+                                        <i class="fa fa-user"></i> 
+                                        Xin chào @User.Identity.GetUserName() !
+                                    </a>
+                                </li>
+                                <li>
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                    {
                                     @Html.AntiForgeryToken()
 
-                                    <li>
-                                        <a href="~/Account/Details?id=@User.Identity.GetUserName()">
-                                            <i class="fa fa-user"></i> 
-                                            Xin chào @User.Identity.GetUserName() !
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:document.getElementById('logoutForm').submit()">
-                                            <i class="fa fa-sign-out"></i>
-                                            Đăng xuất
-                                        </a>
-                                    </li>
-                                }
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                                        <i class="fa fa-sign-out"></i>
+                                        Đăng xuất
+                                    </a>
+                                    }
+                                </li>
                             }
                             else
                             {
