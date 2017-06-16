@@ -3,19 +3,37 @@
 <head>
     <title>SmartShop</title>
     <script type="text/javascript" src="~/Scripts/jquery.min1.12.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js_new/jquery_easing.js"></script>
     <script>
         $(document).ready(function () {
             $("#Edit_cmt").click(function () {
                 $(".EditCmt").slideToggle();
             });
         });
-    
+
         function AddToCart(id) {
             $.post("/ShoppingCart/AddToCart", { "id": id },
             function (data) {
                 if (data.Code == '0') {
                     $(".cart-amunt").html(data.ttien);
                     $(".product-count").html(data.sluong);
+                    
+                    var cart = $('.mini_cart .fa-shopping-cart');
+                    var imgtofly = $('.single-product.' + id).find('img').eq(0);
+                    if (imgtofly) {
+                        var imgclone = imgtofly.clone()
+                            .offset({ top: imgtofly.offset().top, left: imgtofly.offset().left })
+                            .css({ 'opacity': '0.7', 'position': 'absolute', 'height': '270px', 'width': '360px', 'z-index': '1000' })
+                            .appendTo($('body'))
+                            .animate({
+                                'top': cart.offset().top,
+                                'left': cart.offset().left,
+                                'width': 55,
+                                'height': 55
+                            }, 1000, 'easeInElastic');
+                        imgclone.animate({ 'width': 0, 'height': 0 }, function () { $(this).detach() });
+                    }
                 }
             });
             return false;
@@ -28,8 +46,7 @@
             if (y >= 38) {
                 $(".mainmenu-area").addClass("scroll");
             }
-            else
-            {
+            else {
                 $(".mainmenu-area").removeClass("scroll");
             }
         });
@@ -45,8 +62,7 @@
     <link href="~/Content/css/responsive.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/css/owl.carousel.css" rel="stylesheet" type="text/css" media="all" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="~/Scripts/js/jquery.min.js"></script>
-    <script src="~/Scripts/js_new/jquery-2.1.1.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $(".dropdown img.flag").addClass("flagvisibility");
@@ -81,10 +97,10 @@
     <!-- start menu -->
     <link href="~/Content/megamenu.css" rel="stylesheet" type="text/css" media="all" />
     <script type="text/javascript" src="~/Scripts/js/megamenu.js"></script>
-    
+
     <!-- end menu -->
     <script type="text/javascript" src="~/Scripts/js/jquery.jscrollpane.min.js"></script>
-    
+
     <!----details-product-slider--->
     <!-- Include the Etalage files -->
     <link rel="stylesheet" href="~/Content/etalage.css">
@@ -322,21 +338,7 @@
     </div>
        	 
        
-       <script type="text/javascript">
-			$(document).ready(function() {
-			
-				var defaults = {
-		  			containerID: 'toTop', // fading element id
-					containerHoverID: 'toTopHover', // fading element hover id
-					scrollSpeed: 1200,
-					easingType: 'linear' 
-		 		};
-				
-				
-				$().UItoTop({ easingType: 'easeOutQuart' });
-				
-			});
-		</script>
+       
         <a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"></span></a>
 
     <script src="~/Scripts/js_new/jquery.min.js"></script>

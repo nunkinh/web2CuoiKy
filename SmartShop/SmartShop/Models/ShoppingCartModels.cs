@@ -7,6 +7,6 @@ namespace SmartShop.Models
 {
     public class ShoppingCartModels
     {
-        public ShoppingCart Cart { get; set; }
+        public DHangModels Cart { get; set; }
     }
 }

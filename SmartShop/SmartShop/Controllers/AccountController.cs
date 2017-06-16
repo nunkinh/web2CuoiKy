@@ -143,7 +143,8 @@ namespace SmartShop.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Login", "Account");
+            //return View(model);
         }
 
         //

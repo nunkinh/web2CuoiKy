@@ -1,26 +1,21 @@
 ﻿@model PetaPoco.Page<SmartShopConnection.Comment>
 @using Microsoft.AspNet.Identity
 
-@foreach (var item in Model.Items) {
-    
-    <div id="cmt" style="width:100%; border:solid 1px #000; padding:5px 5px 5px 5px; margin-bottom:10px;">
-        
+
+@foreach (var item in Model.Items)
+{
+
+    <div id="cmt" class="@item.IDCmt" style="width:100%; border:solid 1px #000; padding:5px 5px 5px 5px; margin-bottom:10px;">
+
         <div id="cmtuser" style="font-size:21px;font-weight:bold;">@item.UserCmt</div>
         <div id="noidung" style="font-size:18px;">@item.NoiDung</div>
-        
-    @if (@User.Identity.GetUserName()==@item.UserCmt)
+
+        @if (@User.Identity.GetUserName() == @item.UserCmt)
         {
-            <script>
-                $(document).ready(function () {
-                    $("#Edit_cmt_@item.IDCmt").click(function () {
-                        $("#EditCmt_@item.IDCmt").slideToggle();
-                    });
-                });
-            </script>
-            <a href="@Url.Action("Delete", "Comment", new { id = item.IDCmt })"><input type="button" value="Xoá" /></a>
-            <input type="button" value="Sửa" id="Edit_cmt_@item.IDCmt" />
+            <a href="javascript:DeleteCmt(@item.IDCmt)"><input type="button" value="Xoá" /></a>
+            <input type="button" value="Sửa" id="Edit_cmt_@item.IDCmt" class="edit_cmt" />
             <div id="EditCmt_@item.IDCmt" class="EditCmt">
-                <form action="@Url.Action("Edit", "Comment")" method="post">
+                <form action="javascript:EditCmt(@item.IDCmt)" method="post" class="form_edit_cmt">
                     <input type="hidden" id="IDCmt" name="IDCmt" value="@item.IDCmt" />
                     <input type="hidden" id="MaSP" name="MaSP" value="@Session["MaSP"]" />
                     <input type="hidden" id="UserCmt" name="UserCmt" value="@User.Identity.GetUserName()" />

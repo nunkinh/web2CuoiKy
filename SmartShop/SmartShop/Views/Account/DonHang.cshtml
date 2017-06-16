@@ -4,120 +4,118 @@
     ViewBag.Title = "DonHang";
     Layout = "~/Views/Shared/_Main.cshtml";
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MaDH)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayDatHang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HoTen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SDT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DiaChi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tongtien)
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaDH)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayDatHang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoTen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SDT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TinhTrang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GhiChu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tongtien)
-            </td>
+<div class="container">
+    <table class="table">
+        <tr style="background:#333;color:#fff;text-transform:uppercase;font-weight:bold;">
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.MaDH)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.NgayDatHang)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.HoTen)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.SDT)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.DiaChi)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.TinhTrang)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.GhiChu)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.Tongtien)
+            </th>
         </tr>
-        <tr>
-            <td colspan="11">
-                <table>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            Mã sản phẩm
-                        </td>
-                        <td>
-                            Số lượng
-                        </td>
-                        <td>
-                            Đơn giá
-                        </td>
-                        <td>
-                            Tổng tiền
-                        </td>
-                    </tr>
-                    @foreach (var item2 in item.DsctDH)
-                    {
+
+        @foreach (var item in Model)
+{
+    <tr style="background: #5a88ca; color: #fff; font-weight: bold;">
+        <td>
+            @Html.DisplayFor(modelItem => item.MaDH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayDatHang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiaChi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TinhTrang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GhiChu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tongtien) VND
+        </td>
+    </tr>
+            <tr>
+                <td colspan="11">
+                    <table style="margin:auto;">
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
                             <td>
-                                @Html.DisplayFor(modelItem => item2.MaSP)
+                                Sản phẩm
+                            </td>
+                            <td>Hình</td>
+                            <td>
+                                Số lượng
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item2.SoLuong)
+                                Đơn giá
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item2.DonGia)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item2.TongTien)
+                                Tổng tiền
                             </td>
                         </tr>
-                    }
-                </table>
-            </td>
-        </tr>
-    }
+                        @foreach (var item2 in item.DsctDH)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item2.TenSP)
+                                </td>
+                                <td>
+                                    <img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="~/Image/product/@item2.Hinh">
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item2.SoLuong)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item2.DonGia)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item2.TongTien) VND
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
 
+</div>

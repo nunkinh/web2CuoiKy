@@ -18,7 +18,7 @@ namespace SmartShopBUS.Bus
         public static void Them(Account acc)
         {
             var db = new SmartShopConnectionDB();
-            db.Insert(acc);
+            db.Insert("Accounts", "UserName", acc);
         }
         public static void PhanQuyen(string us)
         {

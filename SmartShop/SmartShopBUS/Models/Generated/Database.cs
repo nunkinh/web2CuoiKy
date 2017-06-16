@@ -145,8 +145,7 @@ namespace SmartShopConnection
     public partial class viewUser : SmartShopConnectionDB.Record<viewUser>  
     {
 
-        [Column]
-        public string UserId { get; set; }
+        [Column] public string UserId { get; set; }
         [Display(Name = "Họ và tên ")]
 		[Column] public string HoTen { get; set; }
 
@@ -178,7 +177,7 @@ namespace SmartShopConnection
 
 
         [Display(Name = "Phân quyền ")]
-		[Column] public string Name { get; set; }
+		[Column] public int? Admin { get; set; }
 
 
 
@@ -472,7 +471,7 @@ namespace SmartShopConnection
     public partial class DonDatHang : SmartShopConnectionDB.Record<DonDatHang>  
     {
 
-        public IEnumerable<ChiTietDH> DsctDH { get; set; }
+        public IEnumerable<View_CTDH> DsctDH { get; set; }
         [Display(Name = "Mã đơn hàng ")]
         [Required(ErrorMessage = "Không được bỏ trống {0}")]
 		[Column] public int MaDH { get; set; }
@@ -805,6 +804,55 @@ namespace SmartShopConnection
 
 
 	}
+
+
+    [TableName("dbo.View_CTDH")]
+
+
+
+    [ExplicitColumns]
+    public partial class View_CTDH : SmartShopConnectionDB.Record<View_CTDH>
+    {
+
+
+        [Display(Name = "Mã đơn hàng ")]
+        [Column]
+        public int? MaDH { get; set; }
+
+
+
+
+        [Display(Name = "Mã sản phẩm ")]
+        [Column]
+        public string MaSP { get; set; }
+
+
+
+
+        [Display(Name = "Số lượng ")]
+        [Column]
+        public int? SoLuong { get; set; }
+
+
+        [Display(Name = "Đơn giá ")]
+        [Column]
+        public string DonGia { get; set; }
+
+
+        [Display(Name = "Tổng tiền ")]
+        [Column]
+        public int? TongTien { get; set; }
+
+        [Display(Name = "Tên sản phẩm ")]
+        [Column]
+        public string TenSP { get; set; }
+
+
+        [Display(Name = "Hình sản phẩm ")]
+        [Column]
+        public string Hinh { get; set; }
+
+    }
 
     
 

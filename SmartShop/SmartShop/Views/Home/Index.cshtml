@@ -72,7 +72,7 @@
                     <div class="row">
                         @foreach (var item in Model.Items)
                         {
-                            <div class="col-md-4 single-product" >
+                            <div class="col-md-4 single-product @Html.DisplayFor(modelItem => item.MaSP)">
                                 <div class="product-f-image">
                                     <img src="~/Image/product/@Html.DisplayFor(modelItem => item.Hinh)" alt="">
                                     <div class="product-hover">

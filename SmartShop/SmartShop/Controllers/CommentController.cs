@@ -36,37 +36,58 @@ namespace SmartShop.Controllers
             return PartialView();
         }
         [HttpPost]
-        public ActionResult Created(string UserCmt, string NoiDung, string MaSP)
+        public JsonResult Created(string userID, string mainCmt, string maSP)
         {
+            var result = new { Code = 1, Msg = "Fail" , idCmt = 0 };
             try
             {
                 Comment cmt = new Comment();
-                cmt.MaSP = MaSP;
-                cmt.UserCmt = UserCmt;
-                cmt.NoiDung = NoiDung;
+                cmt.MaSP = maSP;
+                cmt.UserCmt = userID;
+                cmt.NoiDung = mainCmt;
                 CommentBus.Them(cmt);
-                return RedirectToAction("Details", "Product", new { id = (string)Session["MaSP"]});
+                Comment cmt2 = new Comment();
+                cmt2 = CommentBus.ChiTiet(userID);
+                result = new { Code = 0, Msg = "Success", idCmt = cmt2.IDCmt };
+                return Json(result);
             }
             catch
             {
-                return RedirectToAction("Details", "Product", new { id = (string)Session["MaSP"] });
+                return Json(result);
             }
         }
-        public ActionResult Delete(int id)
+        public JsonResult Delete(int id)
         {
-            CommentBus.Xoa(id);
-            return RedirectToAction("Details", "Product", new { id = Session["MaSP"] });
+            var result = new { Code = 1, Msg = "Fail" };
+            
+            try
+            {
+                CommentBus.Xoa(id);
+                result = new { Code = 0, Msg = "Success" };
+                return Json(result);
+            }
+            catch
+            {
+                return Json(result);
+            }
         }
-        public ActionResult Edit(Comment cmt)
+        public JsonResult Edit(int idCmt, string maSP, string userID, string mainCmt)
         {
+            var result = new { Code = 1, Msg = "Fail" };
+            Comment cmt = new Comment();
+            cmt.IDCmt = idCmt;
+            cmt.MaSP = maSP;
+            cmt.UserCmt = userID;
+            cmt.NoiDung = mainCmt;
             try
             {
                 CommentBus.Sua(cmt);
-                return RedirectToAction("Details", "Product", new { id = Session["MaSP"] });
+                result = new { Code = 0, Msg = "Success" };
+                return Json(result);
             }
             catch
             {
-                return RedirectToAction("Details", "Product", new { id = Session["MaSP"] });
+                return Json(result);
             }
         }
     }

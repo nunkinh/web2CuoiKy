@@ -27,7 +27,7 @@ namespace SmartShopBUS.Bus
                 dh.SDT = item.SDT;
                 dh.TinhTrang = item.TinhTrang;
                 dh.Tongtien = item.Tongtien;
-                dh.DsctDH = db.Query<ChiTietDH>("select * from ChiTietDH where MaDH=@0", item.MaDH);
+                dh.DsctDH = db.Query<View_CTDH>("select * from ChiTietDH where MaDH=@0", item.MaDH);
                 model.Add(dh);
             }
             return (model);
@@ -35,7 +35,7 @@ namespace SmartShopBUS.Bus
         public static IEnumerable<DonDatHang> DsDHUs(string id)
         {
             var db = new SmartShopConnectionDB();
-            var dsDH = db.Query<DonDatHang>("select * from DonDatHang where Username=@0",id);
+            var dsDH = db.Query<DonDatHang>("select * from DonDatHang where Username=@0 ORDER BY NgayDatHang DESC", id);
             List<DonDatHang> model = new List<DonDatHang>();
             foreach (var item in dsDH)
             {
@@ -50,7 +50,7 @@ namespace SmartShopBUS.Bus
                 dh.SDT = item.SDT;
                 dh.TinhTrang = item.TinhTrang;
                 dh.Tongtien = item.Tongtien;
-                dh.DsctDH = db.Query<ChiTietDH>("select * from ChiTietDH where MaDH=@0", item.MaDH);
+                dh.DsctDH = db.Query<View_CTDH>("select * from [DAn_Web2].[dbo].[View_CTDH] where MaDH=@0", item.MaDH);
                 model.Add(dh);
             }
             return (model);

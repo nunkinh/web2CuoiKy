@@ -16,17 +16,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Cart.ListItem)
-                {
-                    <tr class="cart_item">
-                        <td class="product-name">
-                            @item.TenSP <strong class="product-quantity">× @item.SoLuong</strong>
-                        </td>
-                        <td class="product-total">
-                            <span class="amount">@item.TongCong.ToString("N0")</span>VND
-                        </td>
-                    </tr>
-                }
+            @foreach (var item in Model.Cart.ListItem)
+            {
+                <tr class="cart_item">
+                    <td class="product-name">
+                        @item.TenSP <strong class="product-quantity">× @item.SoLuong</strong>
+                    </td>
+                    <td class="product-total">
+                        <span class="amount">@item.TongCong.ToString("N0")</span>VND
+                    </td>
+                </tr>
+            }
             </tbody>
             <tfoot>
 
@@ -55,8 +55,7 @@
 
                 <tr class="order-total">
                     <th>Order Total</th>
-                    <td>
-                        <strong>
+                    <td><strong>
                             <span class="amount">
                                 @if (Model != null && @Model.Cart != null)
                                 {
@@ -64,8 +63,7 @@
                                 }
                             </span>
                             VND
-                        </strong>
-                    </td>
+                        </strong> </td>
                 </tr>
 
             </tfoot>

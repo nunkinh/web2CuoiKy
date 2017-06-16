@@ -22,7 +22,7 @@ namespace SmartShopBUS.Bus
         public static void Them(Loai l)
         {
             var db = new SmartShopConnectionDB();
-            db.Insert(l);
+            db.Insert("Loai", "MaLoai", l);
         }
         public static void Xoa(string id, Loai l)
         {

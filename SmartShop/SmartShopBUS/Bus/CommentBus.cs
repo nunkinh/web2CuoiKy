@@ -15,6 +15,12 @@ namespace SmartShopBUS.Bus
             var db = new SmartShopConnectionDB();
             return db.Page<Comment>(page.Value, 5, "SELECT * FROM Comment where MaSP=@0 ORDER BY IDCmt DESC", masp);
         }
+        public static Comment ChiTiet(string idUser)
+        {
+            var db = new SmartShopConnectionDB();
+            var cmt = db.SingleOrDefault<Comment>("SELECT TOP 1 * FROM [DAn_Web2].[dbo].[Comment] WHERE UserCmt=@0 ORDER BY IDCmt DESC", idUser);
+            return cmt;
+        }
         public static void Them(Comment cmt)
         {
             var db = new SmartShopConnectionDB();

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Main.cshtml";
 }
 @Styles.Render("~/Content/css")
-<div>
+<div class="container">
     <h4>Thông tin tài khoản</h4>
 	<hr />
     <dl class="dl-horizontal">
@@ -50,9 +50,10 @@
         </dd>
 
     </dl>
+    <p>
+        <a href="~/Account/Edit?id=@Model.UserName" class="grey">Sửa thông tin cá nhân</a>
+        @Html.ActionLink("Đổi mật khẩu", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage", @class = "grey" })
+        <a href="~/Account/DonHang?id=@Model.UserName" class="grey">Danh sách đơn hàng</a>
+    </p>
 </div>
-<p>
-    <a href="~/Account/Edit?id=@Model.UserName" class="grey">Sửa thông tin cá nhân</a>
-    @Html.ActionLink("Đổi mật khẩu", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage", @class = "grey" })
-    <a href="~/Account/DonHang?id=@Model.UserName" class="grey">Danh sách đơn hàng</a>
-</p>
+

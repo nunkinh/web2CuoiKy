@@ -15,13 +15,13 @@ namespace SmartShop.Controllers
         public ActionResult Index()
         {
             ShoppingCartModels model = new ShoppingCartModels();
-            model.Cart = (ShoppingCart)Session["Cart"];
+            model.Cart = (DHangModels)Session["Cart"];
             return View(model);
         }
         public ActionResult _Cart()
         {
             ShoppingCartModels model = new ShoppingCartModels();
-            model.Cart = (ShoppingCart)Session["Cart"];
+            model.Cart = (DHangModels)Session["Cart"];
             return PartialView("_Cart", model);
         }
         [HttpPost]
@@ -32,10 +32,10 @@ namespace SmartShop.Controllers
             Product sp = db.Single<Product>("select * from Product where MaSP = @0", id);
             if (sp != null)
             {
-                ShoppingCart objCart = (ShoppingCart)Session["Cart"];
+                DHangModels objCart = (DHangModels)Session["Cart"];
                 if (objCart == null)
                 {
-                    objCart = new ShoppingCart();
+                    objCart = new DHangModels();
                 }
 
                 ShoppingCartItem item = new ShoppingCartItem()
@@ -51,7 +51,7 @@ namespace SmartShop.Controllers
                 objCart.AddToCart(item);
                 Session["Cart"] = objCart;
                 ShoppingCartModels model = new ShoppingCartModels();
-                model.Cart = (ShoppingCart)Session["Cart"];
+                model.Cart = (DHangModels)Session["Cart"];
                 int ii = 0;
                 int tongtien = 0;
                 foreach (var item2 in model.Cart.ListItem)
@@ -72,13 +72,13 @@ namespace SmartShop.Controllers
         {
             var response = new { Code = 1, Msg = "Fail", masp = id, ttien = @Session["TongTien"] };
 
-            ShoppingCart objCart = (ShoppingCart)Session["Cart"];
+            DHangModels objCart = (DHangModels)Session["Cart"];
             if (objCart != null)
             {
                 objCart.RemoveFromCart(id);
                 Session["Cart"] = objCart;
                 ShoppingCartModels model = new ShoppingCartModels();
-                model.Cart = (ShoppingCart)Session["Cart"];
+                model.Cart = (DHangModels)Session["Cart"];
                 int ii = 0;
                 int tongtien = 0;
                 foreach (var item2 in model.Cart.ListItem)
@@ -99,13 +99,13 @@ namespace SmartShop.Controllers
             int tonggia = quantity * gia;
             var response = new { Code = 1, Msg = "Fail", masp = id, ttien = @Session["TongTien"], tgia = tonggia.ToString("N0") };
 
-            ShoppingCart objCart = (ShoppingCart)Session["Cart"];
+            DHangModels objCart = (DHangModels)Session["Cart"];
             if (objCart != null)
             {
                 objCart.UpdateQuantity(id, quantity);
                 Session["Cart"] = objCart;
                 ShoppingCartModels model = new ShoppingCartModels();
-                model.Cart = (ShoppingCart)Session["Cart"];
+                model.Cart = (DHangModels)Session["Cart"];
                 int ii = 0;
                 int tongtien = 0;
                 foreach (var item2 in model.Cart.ListItem)
@@ -124,7 +124,7 @@ namespace SmartShop.Controllers
         public ActionResult _ThanhToan()
         {
             ShoppingCartModels model = new ShoppingCartModels();
-            model.Cart = (ShoppingCart)Session["Cart"];
+            model.Cart = (DHangModels)Session["Cart"];
             return View(model);
         }
 
@@ -151,7 +151,7 @@ namespace SmartShop.Controllers
 
                 List<ChiTietDH> dsCTDH = new List<ChiTietDH>();
                 ShoppingCartModels model = new ShoppingCartModels();
-                model.Cart = (ShoppingCart)Session["Cart"];
+                model.Cart = (DHangModels)Session["Cart"];
                 foreach (var item in model.Cart.ListItem)
                 {
                     ChiTietDH ctdh = new ChiTietDH();
