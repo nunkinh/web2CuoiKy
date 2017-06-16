@@ -1,4 +1,5 @@
-﻿using SmartShopConnection;
+﻿using PetaPoco;
+using SmartShopConnection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,27 @@ namespace SmartShopBUS.Bus
 {
     public class DonHangBus
     {
-        public static void Them(DonDatHang dh, List<ChiTietDH> ctdh)
+        public static void Them(DonDatHang dh, List<ChiTietDH> ctdh, string username)
         {
             var db = new SmartShopConnectionDB();
-            db.Insert("DonDatHang","MaDH",dh);
-            var madh = db.SingleOrDefault<DonDatHang>("SELECT TOP 1 * FROM DonDatHang ORDER BY MaDH DESC");
-            foreach(var item in ctdh)
+            db.Insert("DonDatHang", "MaDH", dh);
+            var madh = db.SingleOrDefault<DonDatHang>("SELECT TOP 1 * FROM DonDatHang WHERE Username=@0 ORDER BY MaDH DESC", username);
+            foreach (var item in ctdh)
             {
                 item.MaDH = madh.MaDH;
                 db.Insert("ChiTietDH", "MaDH", item);
             }
+        }
+        public static void ThemCTDH(ChiTietDH ctdh)
+        {
+            var db = new SmartShopConnectionDB();
+            db.Insert("ChiTietDH", "MaDH", ctdh);
+        }
+        public static DonDatHang LayMaDh(string username)
+        {
+            var db = new SmartShopConnectionDB();
+            var madh = db.SingleOrDefault<DonDatHang>("SELECT TOP 1 * FROM DonDatHang WHERE Username=@0 ORDER BY MaDH DESC", username);
+            return madh;
         }
         public static IEnumerable<DonDatHang> DanhSach()
         {

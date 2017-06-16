@@ -121,6 +121,13 @@ namespace SmartShop.Controllers
             return Json(response);
         }
 
+        public ActionResult _ThanhToan()
+        {
+            ShoppingCartModels model = new ShoppingCartModels();
+            model.Cart = (ShoppingCart)Session["Cart"];
+            return View(model);
+        }
+
         public ActionResult ThanhToan()
         {
             return View(UserBus.ChiTiet(User.Identity.GetUserName()));
@@ -138,10 +145,10 @@ namespace SmartShop.Controllers
                 dh.SDT = DienThoai;
                 dh.GhiChu = GhiChu;
                 dh.NgayDatHang = DateTime.Now;
-                dh.Tongtien = (int)Session["TongTien"];
-                
+                //dh.Tongtien = (int)Session["TongTien"];
+                int tongtien = 0;
                 //CTDH
-                
+
                 List<ChiTietDH> dsCTDH = new List<ChiTietDH>();
                 ShoppingCartModels model = new ShoppingCartModels();
                 model.Cart = (ShoppingCart)Session["Cart"];
@@ -153,10 +160,12 @@ namespace SmartShop.Controllers
                     ctdh.DonGia = item.Gia.ToString();
                     ctdh.TongTien = (int)item.TongCong;
                     dsCTDH.Add(ctdh);
+                    tongtien = tongtien + (int)item.TongCong;
                 }
                 //
-                DonHangBus.Them(dh,dsCTDH);
-                return RedirectToAction("Index","Home");
+                dh.Tongtien = tongtien;
+                DonHangBus.Them(dh, dsCTDH, User.Identity.GetUserName());
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
@@ -164,6 +173,6 @@ namespace SmartShop.Controllers
             }
             
         }
-        public decimal? TongCong { get; set; }
+        //public decimal? TongCong { get; set; }
     }
 }

@@ -2,34 +2,70 @@
 @using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Thanh Toán Giỏ hàng";
-    Layout = null;
 }
-<div class="register_account">
-    <div class="wrap">
-        <form action="~/ShoppingCart/ThanhToan" method="post">
-            <div class="col_1_of_2 span_1_of_2">
-                <label class="col-md-2 control-label">Họ và tên: </label>
-                <div>
-                    <input class="form-control" data-val="true" id="HoTen" name="HoTen" type="text" value="@Html.DisplayFor(model => model.HoTen)" />
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-content-right">
+                    <div class="woocommerce">
+
+                        <form enctype="multipart/form-data" action="~/ShoppingCart/ThanhToan" class="checkout" method="post" name="checkout">
+
+                            <div id="customer_details" class="col2-set">
+                                <div class="woocommerce-billing-fields">
+                                    <div class="col-md-6">
+                                        <h3>Billing Details</h3>
+                                        <p id="billing_first_name_field" class="form-row form-row-first validate-required">
+                                            <label class="" for="billing_first_name">
+                                                Họ tên
+                                            </label>
+                                            <input class="form-control input-text" data-val="true" id="HoTen" name="HoTen" type="text" value="@Html.DisplayFor(model => model.HoTen)" placeholder="Họ tên" />
+                                        </p>
+
+                                        <p id="billing_first_name_field" class="form-row form-row-first validate-required">
+                                            <label class="" for="billing_first_name">
+                                                Email
+                                            </label>
+                                            <input class="form-control input-text" data-val="true" id="Email" name="Email" type="text" value="@Html.DisplayFor(model => model.Email)" placeholder="Email" />
+                                        </p>
+
+                                        <p id="billing_first_name_field" class="form-row form-row-first validate-required">
+                                            <label class="" for="billing_first_name">
+                                                Điện thoại
+                                            </label>
+                                            <input class="form-control input-text" data-val="true" id="DienThoai" name="DienThoai" type="text" value="@Html.DisplayFor(model => model.DienThoai)" placeholder="Điện thoại" />
+                                        </p>
+
+                                        <p id="billing_last_name_field" class="form-row form-row-last validate-required">
+                                            <label class="" for="billing_last_name">
+                                                Địa chỉ
+                                            </label>
+                                            <input class="form-control input-text" data-val="true" id="DiaChi" name="DiaChi" type="text" value="@Html.DisplayFor(model => model.DiaChi)" placeholder="Địa chỉ" />
+                                        </p>
+
+                                        <p id="billing_last_name_field" class="form-row form-row-last validate-required">
+                                            <label class="" for="billing_last_name">
+                                                Ghi chú
+                                            </label>
+                                            <textarea class="form-control input-text" data-val="true" id="GhiChu" name="GhiChu" placeholder="Ghi chú"></textarea>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Action("_ThanhToan", "ShoppingCart")
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                        </form>
+
+                    </div>
                 </div>
-                <label class="col-md-2 control-label">Email: </label>
-                <div>
-                    <input class="form-control" data-val="true" id="Email" name="Email" type="text" value="@Html.DisplayFor(model => model.Email)" />
-                </div>
-                <label class="col-md-2 control-label">Số điện thoại: </label>
-                <div>
-                    <input class="form-control" data-val="true" id="DienThoai" name="DienThoai" type="text" value="@Html.DisplayFor(model => model.DienThoai)" />
-                </div>
-                <label class="col-md-2 control-label">Địa chỉ: </label>
-                <div>
-                    <input class="form-control" data-val="true" id="DiaChi" name="DiaChi" type="text" value="@Html.DisplayFor(model => model.DiaChi)" />
-                </div>
-                <label class="col-md-2 control-label">Ghi chú: </label>
-                <div>
-                    <textarea class="form-control" data-val="true" id="GhiChu" name="GhiChu" ></textarea>
-                </div>
-                <input type="submit" class="grey" value="Hoàn thành" />
             </div>
-        </form>
+        </div>
     </div>
 </div>

@@ -983,6 +983,7 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Product\Loai.cshtml" />
     <Content Include="Views\Account\DonHang.cshtml" />
+    <Content Include="Views\ShoppingCart\_ThanhToan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

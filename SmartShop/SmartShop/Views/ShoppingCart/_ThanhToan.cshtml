@@ -1,0 +1,88 @@
+﻿@model SmartShop.Models.ShoppingCartModels
+
+@{
+    ViewBag.Title = "_ThanhToan";
+    Layout = null;
+}
+<h3 id="order_review_heading">Your order</h3>
+@if (@Session["sluong"] != null)
+{
+    <div id="order_review" style="position: relative;">
+        <table class="shop_table">
+            <thead>
+                <tr>
+                    <th class="product-name">Sản phẩm</th>
+                    <th class="product-total">Tổng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Cart.ListItem)
+                {
+                    <tr class="cart_item">
+                        <td class="product-name">
+                            @item.TenSP <strong class="product-quantity">× @item.SoLuong</strong>
+                        </td>
+                        <td class="product-total">
+                            <span class="amount">@item.TongCong.ToString("N0")</span>VND
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+
+                <tr class="cart-subtotal">
+                    <th>Cart Subtotal</th>
+                    <td>
+                        <span class="amount">
+                            @if (Model != null && @Model.Cart != null)
+                            {
+                                @Model.Cart.GetTotal().ToString("N0")
+                            }
+                        </span>
+                        VND
+                    </td>
+                </tr>
+
+                <tr class="shipping">
+                    <th>Giao và nhận hàng</th>
+                    <td>
+
+                        Miễn phí
+                        <input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
+                    </td>
+                </tr>
+
+
+                <tr class="order-total">
+                    <th>Order Total</th>
+                    <td>
+                        <strong>
+                            <span class="amount">
+                                @if (Model != null && @Model.Cart != null)
+                                {
+                                    @Model.Cart.GetTotal().ToString("N0")
+                                }
+                            </span>
+                            VND
+                        </strong>
+                    </td>
+                </tr>
+
+            </tfoot>
+        </table>
+
+
+        <div id="payment">
+
+            <div class="form-row place-order">
+
+                <input type="submit" data-value="Place order" value="Place order" id="place_order" name="woocommerce_checkout_place_order" class="button alt">
+
+
+            </div>
+
+            <div class="clear"></div>
+
+        </div>
+    </div>
+}
