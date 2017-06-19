@@ -1,0 +1,179 @@
+﻿@model SmartShop.Models.ShoppingCartModels
+@{
+    ViewBag.Title = "Giỏ hàng";
+}
+<script type="text/javascript">
+    function RemoveFromCart(id)
+    {
+        if (confirm('Bạn thực sự muốn xóa sản phẩm này khỏi giỏ hàng?'))
+        {
+            $.post("/ShoppingCart/RemoveFromCart", { "id": id },
+            function (data) {
+                if (data.Code == '0') {
+                    $(".cart-amunt").html(data.ttien);
+                    $(".product-count").html(data.sluong);
+                    $("." + data.masp).remove();
+                    $(".cart-subtotal .amount, .order-total .amount").html(data.ttien);
+                }
+            });
+        }
+        return false;
+    }
+    function UpdateQuantity(id, quantity, gia)
+    {
+        if(quantity<0){
+            alert("Số lượng không đúng!!!");
+            $("#quantity_"+id).val(0);
+            quantity = 0;
+            $.post("/ShoppingCart/UpdateQuantity", { "id": id, "quantity": quantity, "gia": gia },
+            function (data) {
+                if (data.Code == '0') {
+                    $(".cart-amunt").html(data.ttien);
+                    $(".product-count").html(data.sluong);
+                    $("." + data.masp+" .product-subtotal .amount").html(data.tgia);
+                    $(".cart-subtotal .amount, .order-total .amount").html(data.ttien);
+                }
+            });
+        }
+        else
+        {
+            $.post("/ShoppingCart/UpdateQuantity", { "id": id, "quantity": quantity, "gia": gia },
+            function (data) {
+                if (data.Code == '0') {
+                    $(".cart-amunt").html(data.ttien);
+                    $(".product-count").html(data.sluong);
+                    $("." + data.masp+" .product-subtotal .amount").html(data.tgia);
+                    $(".cart-subtotal .amount, .order-total .amount").html(data.ttien);
+                }
+            });
+        }
+        
+        return false;
+    }
+</script>
+    
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-content-right">
+                    @if (@Session["sluong"] != null)
+                    {
+                    <div class="woocommerce">
+                            <table cellspacing="0" class="shop_table cart">
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">&nbsp;</th>
+                                        <th class="product-thumbnail">&nbsp;</th>
+                                        <th class="product-name">Tên sản phẩm</th>
+                                        <th class="product-price">Giá</th>
+                                        <th class="product-quantity">Số lượng</th>
+                                        <th class="product-subtotal">Tổng tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.Cart.ListItem)
+                                {
+                                    <tr class="cart_item @item.MaSP">
+                                        <td class="product-remove">
+                                            <a title="Remove this item" class="remove" onclick="return RemoveFromCart('@item.MaSP');">×</a> 
+                                        </td>
+
+                                        <td class="product-thumbnail">
+                                            <a href="/Product/Details/@item.MaSP"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="~/Image/product/@item.Hinh"></a>
+                                        </td>
+
+                                        <td class="product-name">
+                                            <a href="/Product/Details/@item.MaSP">@item.TenSP</a> 
+                                        </td>
+
+                                        <td class="product-price">
+                                            <span class="amount">@item.Gia.ToString("N0") VND</span> 
+                                        </td>
+
+                                        <td class="product-quantity">
+                                            <div class="quantity buttons_added">
+                                                <input id="quantity_@item.MaSP" type="number" size="4" class="input-text qty text" title="Số lượng" value="@item.SoLuong" onchange="return UpdateQuantity('@item.MaSP',this.value,@item.Gia);">
+                                            </div>
+                                        </td>
+
+                                        <td class="product-subtotal">
+                                            <b><span class="amount">@item.TongCong.ToString("N0")</span> VND</b> 
+                                        </td>
+                                    </tr>
+                                }
+                                    <tr>
+                                        <td class="actions" colspan="6">
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                <a href="/ShoppingCart/ThanhToan"><input type="submit" value="Thanh toán" name="proceed" class="checkout-button button alt wc-forward"></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Account/Login"><input type="submit" value="Đăng nhập để thanh toán" name="proceed" class="checkout-button button alt wc-forward"></a>                                                
+                                            }
+                                            
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        
+                        <div class="cart-collaterals">
+
+
+							<div class="cart_totals ">
+								<h2>Giá trị giỏ hàng</h2>
+
+								<table cellspacing="0">
+									<tbody>
+										<tr class="cart-subtotal">
+											<th>Giỏ hàng tổng cộng</th>
+											<td>
+                                                <span class="amount">
+                                                    @if (Model != null && @Model.Cart != null)
+                                                    {
+                                                        @Model.Cart.GetTotal().ToString("N0")
+                                                    }
+                                                </span>
+                                                VND
+                                            </td>
+										</tr>
+
+										<tr class="shipping">
+											<th>Giao và nhận hàng</th>
+											<td>Miễn phí</td>
+										</tr>
+
+										<tr class="order-total">
+											<th>Tổng đặt hàng</th>
+											<td>
+                                                <strong>
+                                                    <span class="amount">
+                                                        @if (Model != null && @Model.Cart != null)
+                                                        {
+                                                            @Model.Cart.GetTotal().ToString("N0")
+                                                        }
+                                                    </span>
+                                                    VND
+                                                </strong>
+                                            </td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+                        </div>
+                    </div> 
+                    }
+                    else
+                    {
+                        <div class="heading"><h2>Bạn chưa mua sản phẩm nào</h2></div>
+                    }                       
+                </div>                    
+            </div>
+        </div>
+    </div>
+</div>
+}
+
